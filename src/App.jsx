@@ -10,7 +10,17 @@ function App() {
         { id: 3, name: "Monitor", price: 55.99, inStock: false, quantity: 0 },
         { id: 4, name: "Laptop", price: 750.55, inStock: true, quantity: 5 },
       ]);
-      const handleAddToCart = ()=>{
+      const handleAddToCart = (id)=>{
+        {/*This reduces the quantity of actual items inStock once clicked to cart*/}
+        setProducts(
+          products.map((product)=>{
+           if(id === product.id){
+          const newQuantity = product.quantity - 1;
+            return {...product, quantity: newQuantity, inStock: newQuantity > 0}
+           } 
+            return product
+          }));
+        {/*This counts/adds the items going into the cart*/}
         setCartItemCount(cartItemCount + 1);
       }
 
@@ -31,7 +41,8 @@ function App() {
               <p>Price: ${product.price}</p>
               <p>{product.inStock ? "Available" : "Unavailable"}</p>
               <p>Quantity: {product.quantity}</p>
-              <button onClick={handleAddToCart}>Add to Cart</button>
+              {/*The disabled={} below deactivates the button on items that aren't inStock*/}
+              <button disabled={!product.inStock} onClick={()=> handleAddToCart(product.id)}>Add to Cart</button>
             </div>
           );
         })}
