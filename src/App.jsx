@@ -3,6 +3,7 @@ import { useState } from 'react';
 import './App.css'
 
 function App() {
+      const [totalPrice, setTotalPrice] = useState(0);
       const [cartItemCount, setCartItemCount] = useState(0);
       const [products, setProducts] = useState([
         { id: 1, name: "Mouse", price: 22.99, inStock: true, quantity: 13 },
@@ -16,6 +17,8 @@ function App() {
           products.map((product)=>{
            if(id === product.id){
           const newQuantity = product.quantity - 1;
+          {/*This adds up the price of all items clicked going into the cart*/}
+           setTotalPrice(totalPrice + product.price)
             return {...product, quantity: newQuantity, inStock: newQuantity > 0}
            } 
             return product
@@ -27,11 +30,12 @@ function App() {
 
   return (
     <div>
-        <h3>Day 1 Class DEMO</h3>
+      <h3>Day 1 Class DEMO</h3>
       <div className="header-info">
         <h1>Store</h1>
         <h2>Cart Item: {cartItemCount}</h2>
-        <h2>Total Price: $0</h2>
+        {/*This adds up the price of all items clicked going into the cart*/}
+        <h2>Total Price: ${totalPrice.toFixed(2)}</h2>
       </div>
       <div className="product-cards">
         {products.map((product) => {
@@ -42,7 +46,12 @@ function App() {
               <p>{product.inStock ? "Available" : "Unavailable"}</p>
               <p>Quantity: {product.quantity}</p>
               {/*The disabled={} below deactivates the button on items that aren't inStock*/}
-              <button disabled={!product.inStock} onClick={()=> handleAddToCart(product.id)}>Add to Cart</button>
+              <button
+                disabled={!product.inStock}
+                onClick={() => handleAddToCart(product.id)}
+              >
+                Add to Cart
+              </button>
             </div>
           );
         })}
