@@ -1,6 +1,7 @@
 
 import { useState } from 'react';
 import './App.css'
+import ProductList from './components/ProductList';
 
 function App() {
       const [totalPrice, setTotalPrice] = useState(0);
@@ -37,25 +38,7 @@ function App() {
         {/*This adds up the price of all items clicked going into the cart*/}
         <h2>Total Price: ${totalPrice.toFixed(2)}</h2>
       </div>
-      <div className="product-cards">
-        {products.map((product) => {
-          return (
-            <div key={product.id} className="product-card">
-              <h3>{product.name}</h3>
-              <p>Price: ${product.price}</p>
-              <p>{product.inStock ? "Available" : "Unavailable"}</p>
-              <p>Quantity: {product.quantity}</p>
-              {/*The disabled={} below deactivates the button on items that aren't inStock*/}
-              <button
-                disabled={!product.inStock}
-                onClick={() => handleAddToCart(product.id)}
-              >
-                Add to Cart
-              </button>
-            </div>
-          );
-        })}
-      </div>
+      <ProductList products={products} handleAddToCart={handleAddToCart}/>
     </div>
   );
 }
