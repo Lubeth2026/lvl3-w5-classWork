@@ -3,13 +3,36 @@ import { useState } from 'react';
 import './App.css'
 
 function App() {
-  //Form Data Object to store all the inputs, RATHER than creating a seperate state for each input in form//
+//Form Data Object to store all the inputs, RATHER than creating a seperate state for each input in form//
   const [formData, setFormData] = useState({
     username: "",
     agreed: false,
     role: "student",
     password: "",
   });
+//This tracks if the for is Submitted//
+    const [submitted, setSubmitted] = useState(false);
+    const [errors, setErrors] = useState(null);
+//This will function check every input field & decide whether and error occurred//
+    const validate = ()=>{
+      const newErrors = {};
+
+      const checkUsername = formData.username.trim();
+      const checkPassword = formData.password.trim();
+      const checkAgreed = formData.agreed === true;
+
+      if(checkUsername.length === 0){
+        newErrors.username = "Username can't be empty!";
+      }
+      if (checkPassword.length === 0) {
+        newErrors.password = "Password can't be empty!";
+      }
+      if(!checkAgreed){
+        newErrors.agreed = "Must Agree!"
+      }
+      return newErrors
+    };
+//This logs the new formData object//
   const handleChange = (event) => {
     const { name, value, type, checked } = event.target;
     //console.log(name, value, type, checked);
@@ -20,10 +43,25 @@ function App() {
     }
     setFormData({ ...formData, [name]: newValue, });
   };
+//This is the Forms Submit click function//
   const handleSubmit = (event)=>{
     event.preventDefault();
-    console.log(formData);
-  }
+    const validationErrors = validate();
+    setErrors(validationErrors);
+    
+    if(Object.keys(validationErrors).length === 0){
+      setFormData({
+        username: "",
+        agreed: false,
+        role: "student",
+        password: "",
+      });
+      setSubmitted(true);
+      return
+    }
+    setSubmitted(false);
+    //console.log(formData);
+  };
 
   return (
     <div>
@@ -53,7 +91,9 @@ function App() {
         </label>
         <button>Submit!</button>
       </form>
+      {submitted && <p>Submitted!</p>}
     </div>
+    
   );
 }
 
