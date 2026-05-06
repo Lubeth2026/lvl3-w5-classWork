@@ -12,7 +12,7 @@ function App() {
   });
 //This tracks if the for is Submitted//
     const [submitted, setSubmitted] = useState(false);
-    const [errors, setErrors] = useState(null);
+    const [errors, setErrors] = useState({});
 //This will function check every input field & decide whether and error occurred//
     const validate = ()=>{
       const newErrors = {};
@@ -72,15 +72,18 @@ function App() {
           <input type="text" name="username" id="username" value={formData.username}
             onChange={handleChange}/>
         </label>
+        {errors.username && <p style={{ color: "red" }}>{errors.username}</p>}
         {/*Password Input Type*/}
         <label htmlFor="password">Password:
           <input type="password" name="password" id="password" value={formData.password}
             onChange={handleChange}/>
         </label>
+        {errors.password && <p style={{ color: "red" }}>{errors.password}</p>}
         {/*This specific input type & onCall event is .checked, not the usual .value*/}
         <label htmlFor="checkbox">Agree
           <input type="checkbox" name="agreed" value={formData.agreed} onChange={handleChange}/>
         </label>
+        {errors.agreed && <p style={{ color: "red" }}>{errors.agreed}</p>}
         {/*Select Dropdown Input Type*/}
         <label htmlFor="role">Role
           <select name="role" value={formData.role} onChange={handleChange}>
