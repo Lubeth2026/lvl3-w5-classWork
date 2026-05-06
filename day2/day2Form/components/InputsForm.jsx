@@ -6,11 +6,12 @@ function InputsForm() {
     const [agreed, setAgreed] = useState(false);  //Checkbox input type//
     const [role, setRole] = useState("student");  //Select dropdown input type//
     const [password, setPassword] = useState("");  //Password input type//
+    const [gender, setGender] = useState("");  //Radio button input type//
 
 //Form submit event to prevent object from refreshing//
     const handleSubmit = (event)=>{
       event.preventDefault();
-      const data = { username, agreed, role, password };
+      const data = { username, agreed, role, password, gender };
       console.log(data);
     };
 
@@ -31,6 +32,16 @@ function InputsForm() {
         {/*This specific input type & onCall event is .checked, not the usual .value*/}
         <label htmlFor="checkbox">Agree
           <input type="checkbox" value={agreed} onChange={(event) => setAgreed(event.target.checked)}/>
+        </label>
+        {/*Radio Button Input Type*/}
+        <label htmlFor="gender">Gender:</label>
+        <label htmlFor="female">Female
+          <input type="radio" name="gender" id="female" value="female" checked={gender === "female"}
+            onChange={(event) => setGender(event.target.value)}/>
+        </label>
+        <label htmlFor="male">Male
+          <input type="radio" name="gender" id="male" value="male" checked={gender === "male"}
+            onChange={(event) => setGender(event.target.value)}/>
         </label>
         {/*Select Dropdown Input Type*/}
         <label htmlFor="role">Role
