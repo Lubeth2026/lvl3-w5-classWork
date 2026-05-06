@@ -1,4 +1,7 @@
 
+body{
+  font-family: sans-serif;
+}
 h1{
   display: flex;
   align-items: center;
@@ -14,8 +17,14 @@ form{
   padding: 10px;
   gap: 15px;
   margin: 0 auto;
+  box-shadow: 2px 2px 5px;
 }
 form label{
   display: flex;
   justify-content: space-between;
+}
+input, button{
+  padding: 5px;
+  border: 2px solid #ccc;
+  border-radius: 5px;
 }
