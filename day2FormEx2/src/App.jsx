@@ -12,14 +12,23 @@ function App() {
   });
   const handleChange = (event) => {
     const { name, value, type, checked } = event.target;
-    console.log(name, value, type, checked);
-    
+    //console.log(name, value, type, checked);
+    let newValue = value;
+
+    if (type === "checkbox") {
+      newValue = checked;
+    }
+    setFormData({ ...formData, [name]: newValue, });
   };
+  const handleSubmit = (event)=>{
+    event.preventDefault();
+    console.log(formData);
+  }
 
   return (
     <div>
       <h1>Form #2 Class DEMO (Form Reset)</h1>
-      <form>
+      <form onSubmit={handleSubmit}>
         {/*Text Input Type*/}
         <label htmlFor="username">Username:
           <input type="text" name="username" id="username" value={formData.username}
